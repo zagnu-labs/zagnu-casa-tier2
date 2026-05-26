@@ -68,7 +68,7 @@ Draft answers for the 54-question CASA Tier 2 Self-Assessment Questionnaire (TAC
 
 **Applicable**: Yes
 **Comment**:
-> The Vercel edge provides DDoS and rate-limit protection on the frontend. AWS ALB and Gin per-route handlers enforce request limits on the backend. The OAuth `gmail.readonly` scope limits the application to reading the connected user's own inbox, preventing cross-account mass exfiltration. Phone OTP issuance is rate-limited to prevent enumeration.
+> Anti-automation is enforced at multiple layers. Edge: the Vercel platform provides DDoS protection and edge rate limiting on the frontend; AWS Shield Standard provides L3/L4 DDoS protection at the ALB fronting the backend. Application layer: per-route rate limits are enforced on the Go backend (Gin middleware) for sensitive endpoints — most notably phone OTP issuance and verification to prevent enumeration and SMS-flood, and the OAuth callback to prevent brute force on short-link codes. Business-logic bound: the requested OAuth scope `gmail.readonly` is scoped to the connected user's own inbox, so even an authenticated automated client cannot mass-exfiltrate data across accounts.
 
 ---
 
