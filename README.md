@@ -9,7 +9,3 @@ Evidence and documentation for the CASA (Cloud Application Security Assessment) 
 - [Architecture, trust boundaries, components, and data flows](./1.1-architecture.md)
 - [DAST remediation report](./dast-remediation.md)
 - [OAuth scope justification](./oauth-scope-justification.md)
-- [Encryption documentation](./encryption.md) _(pending)_
-- [PII data flow](./pii-data-flow.md) _(pending)_
-- [Data retention policy](./data-retention.md) _(pending)_
-- [Revalidation summary](./revalidation-summary.md) _(after rescan)_

@@ -36,7 +36,7 @@ Draft answers for the 54-question CASA Tier 2 Self-Assessment Questionnaire (TAC
 
 **Applicable**: Yes
 **Comment**:
-> Sensitive data is identified and classified in https://github.com/zagnu-labs/zagnu-casa-tier2/blob/main/pii-data-flow.md (OAuth tokens, user email addresses, phone numbers, transaction extracts) and https://github.com/zagnu-labs/zagnu-casa-tier2/blob/main/encryption.md.
+> Sensitive data classes (OAuth access/refresh tokens, user email addresses, phone numbers, and extracted payment-transaction data) are identified and described in https://github.com/zagnu-labs/zagnu-casa-tier2/blob/main/1.1-architecture.md (Section 4 — Sensitive data handling).
 
 ---
 
@@ -44,7 +44,7 @@ Draft answers for the 54-question CASA Tier 2 Self-Assessment Questionnaire (TAC
 
 **Applicable**: Yes
 **Comment**:
-> Encryption, retention, and privacy requirements per data class are documented in https://github.com/zagnu-labs/zagnu-casa-tier2/blob/main/encryption.md and https://github.com/zagnu-labs/zagnu-casa-tier2/blob/main/data-retention.md, and reflected in the architecture (https://github.com/zagnu-labs/zagnu-casa-tier2/blob/main/1.1-architecture.md).
+> Encryption (at-rest via AWS-managed KMS on Aurora, ElastiCache, and S3; in-transit via TLS and SASL/SCRAM), retention, and privacy requirements per data class are described in https://github.com/zagnu-labs/zagnu-casa-tier2/blob/main/1.1-architecture.md (Section 4 — Sensitive data handling, and Section 7 — Authentication and authorization).
 
 ---
 
@@ -356,7 +356,7 @@ Draft answers for the 54-question CASA Tier 2 Self-Assessment Questionnaire (TAC
 
 **Applicable**: Yes
 **Comment**:
-> All databases (AWS Aurora PostgreSQL) and caches (AWS ElastiCache Redis) have encryption-at-rest enabled with keys managed by AWS KMS. Object storage in S3 is also encrypted at rest. Details and configuration evidence in https://github.com/zagnu-labs/zagnu-casa-tier2/blob/main/encryption.md.
+> All databases (AWS Aurora PostgreSQL) and caches (AWS ElastiCache Redis) have encryption-at-rest enabled with keys managed by AWS KMS. Object storage in S3 is also encrypted at rest by default. The architecture overview at https://github.com/zagnu-labs/zagnu-casa-tier2/blob/main/1.1-architecture.md (Section 4) lists which data classes are stored where, and confirms TLS in transit on every hop.
 
 ---
 
@@ -396,7 +396,7 @@ Draft answers for the 54-question CASA Tier 2 Self-Assessment Questionnaire (TAC
 
 **Applicable**: Yes
 **Comment**:
-> User-flow routes (/onboarding, /secure/*, /api/*) are served with Cache-Control: no-cache, no-store, must-revalidate, private to prevent shared cache storage. Configuration in `lp-pwa/next.config.ts`; details in https://github.com/zagnu-labs/zagnu-casa-tier2/blob/main/dast-remediation.md#finding-6.
+> User-flow routes (/onboarding, /secure/*, /api/*) are served with Cache-Control: no-cache, no-store, must-revalidate, private to prevent shared cache storage. Configuration in `lp-pwa/next.config.ts`; details in https://github.com/zagnu-labs/zagnu-casa-tier2/blob/main/dast-remediation.md#finding-6--retrieved-from-cache.
 
 ---
 
