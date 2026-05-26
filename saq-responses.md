@@ -76,7 +76,7 @@ Draft answers for the 54-question CASA Tier 2 Self-Assessment Questionnaire (TAC
 
 **Applicable**: Yes
 **Comment**:
-> The application does not accept user file uploads. This requirement is vacuously satisfied (N/A).
+> The application does not accept user file uploads. There are no untrusted files to store, so no exposure to the risk this control addresses.
 
 ---
 
@@ -84,7 +84,7 @@ Draft answers for the 54-question CASA Tier 2 Self-Assessment Questionnaire (TAC
 
 **Applicable**: Yes
 **Comment**:
-> The application does not accept user file uploads. This requirement is vacuously satisfied (N/A).
+> The application does not accept user file uploads. There are no untrusted files to scan or serve, so no exposure to the risk this control addresses.
 
 ---
 
@@ -156,7 +156,7 @@ Draft answers for the 54-question CASA Tier 2 Self-Assessment Questionnaire (TAC
 
 **Applicable**: Yes
 **Comment**:
-> The application does not implement user-set passwords. Authentication is via Google OAuth 2.0 (for Gmail integration) and phone number + SMS OTP (for the user account). This requirement is vacuously satisfied (N/A).
+> The application does not implement user-set passwords. Authentication is via Google OAuth 2.0 (for Gmail integration) and phone number + SMS OTP (for the user account). There is no password length policy to violate because passwords do not exist in the system.
 
 ---
 
@@ -172,7 +172,7 @@ Draft answers for the 54-question CASA Tier 2 Self-Assessment Questionnaire (TAC
 
 **Applicable**: Yes
 **Comment**:
-> The application does not store user passwords. Authentication is via Google OAuth and SMS OTP only. This requirement is vacuously satisfied (N/A).
+> The application does not store user passwords (authentication is via Google OAuth 2.0 and phone-based SMS OTP). There is no password material subject to offline attack, so the control is fully met.
 
 ---
 
@@ -212,7 +212,7 @@ Draft answers for the 54-question CASA Tier 2 Self-Assessment Questionnaire (TAC
 
 **Applicable**: Yes
 **Comment**:
-> Logout endpoints invalidate the session token server-side immediately. Subsequent requests using the previous token are rejected with 401. The browser back button cannot resume the session. For Gmail OAuth specifically, disconnecting the integration deletes the stored tokens and emits a session.invalidated event consumed by other services.
+> Authentication uses stateless JWT access tokens. On logout the frontend deletes the token from client storage, after which the browser back button has no token to resend and cannot resume the authenticated session. On expiration the backend rejects requests carrying a token whose `exp` claim has passed. For the Gmail OAuth integration specifically, disconnecting the account additionally deletes the stored OAuth tokens server-side and emits a `session.invalidated` event consumed by other services.
 
 ---
 
@@ -220,7 +220,7 @@ Draft answers for the 54-question CASA Tier 2 Self-Assessment Questionnaire (TAC
 
 **Applicable**: Yes
 **Comment**:
-> The application does not implement user-set passwords; this requirement is vacuously satisfied (N/A). The equivalent flow exists for OAuth: when a user disconnects their Google account (either via the Zagnu app or via Google's "Apps with account access" page), the corresponding session is invalidated and removed from the token store, and a session.invalidated event is emitted across all consuming services.
+> The application does not implement user-set passwords, so there is no "password change" event to handle. The equivalent flow exists for OAuth: when a user disconnects their Google account (either via the Zagnu app or via Google's "Apps with account access" page), the corresponding session is invalidated and removed from the token store, and a session.invalidated event is emitted across all consuming services.
 
 ---
 
@@ -300,7 +300,7 @@ Draft answers for the 54-question CASA Tier 2 Self-Assessment Questionnaire (TAC
 
 **Applicable**: Yes
 **Comment**:
-> The application does not send email and does not use SMTP or IMAP for any operation. Gmail integration is strictly read-only via Google's REST API. This requirement is vacuously satisfied (N/A).
+> The application does not send email and does not use SMTP or IMAP for any operation. Gmail integration is strictly read-only via Google's REST API. There is no mail system into which user input could be injected.
 
 ---
 
@@ -324,7 +324,7 @@ Draft answers for the 54-question CASA Tier 2 Self-Assessment Questionnaire (TAC
 
 **Applicable**: Yes
 **Comment**:
-> The application does not accept, render, or process user-supplied SVG content. This requirement is vacuously satisfied (N/A).
+> The application does not accept, render, or process user-supplied SVG content. There is no user SVG input path through which scriptable content could be introduced.
 
 ---
 
@@ -348,7 +348,7 @@ Draft answers for the 54-question CASA Tier 2 Self-Assessment Questionnaire (TAC
 
 **Applicable**: Yes
 **Comment**:
-> The application does not use LDAP for any authentication or directory operation. This requirement is vacuously satisfied (N/A).
+> The application does not use LDAP for any authentication or directory operation. There is no LDAP query path through which injection could occur.
 
 ---
 
