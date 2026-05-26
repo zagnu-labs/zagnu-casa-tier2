@@ -100,7 +100,7 @@ Draft answers for the 54-question CASA Tier 2 Self-Assessment Questionnaire (TAC
 
 **Applicable**: Yes
 **Comment**:
-> Routes are registered at the Gin router with explicit HTTP methods and paths. Resource-level authorization is enforced in each handler by checking the session-derived user identity against the requested resource's owner before any data access.
+> URI-level authorization: the API gateway routes traffic by URL prefix and each prefix maps to an authorization tier — `/public/*` is unauthenticated, `/private/*` requires a valid user session, `/internal/*` is restricted to in-cluster callers. Authentication middleware rejects requests that do not match the tier requirement before they reach a handler. Resource-level authorization: handlers additionally verify that the authenticated user owns (or has explicit permission on) the requested resource by comparing the session-derived identity against the resource's owner record before any read or write.
 
 ---
 
