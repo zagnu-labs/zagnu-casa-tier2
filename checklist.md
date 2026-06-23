@@ -32,9 +32,12 @@ A live tracker for the CASA Tier 2 assessment of the Zagnu application's Google 
 - [x] `1.1-architecture.md` — architecture, trust boundaries, data flows
 - [x] `dast-remediation.md` — 7 findings with disposition and evidence
 - [x] `oauth-scope-justification.md` — why we need `gmail.readonly`
-- [ ] `encryption.md` — at-rest and in-transit encryption per component
-- [ ] `pii-data-flow.md` — PII inventory and flow
-- [ ] `data-retention.md` — retention windows and deletion procedures
+- [x] `encryption.md` — at-rest and in-transit encryption per component
+- [x] `pii-data-flow.md` — PII inventory and flow
+- [x] `data-retention.md` — retention windows and deletion procedures
+- [x] `data-classification.md` — sensitive data classified into protection levels
+- [x] `deployment-runbook.md` — automated deploy, rollback, and restore-from-backup
+- [x] `access-control.md` — no shared/default accounts; authn/authz model
 - [ ] `revalidation-summary.md` — post-rescan summary (Phase 6)
 
 ## Phase 5 — Self-Assessment Questionnaire (SAQ)

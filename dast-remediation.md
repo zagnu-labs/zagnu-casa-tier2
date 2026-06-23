@@ -83,7 +83,7 @@ This report documents the disposition of every finding from the initial Veracode
 ## Finding 3 — Proxy Disclosure
 
 **Severity**: Low (CWE-204)
-**Status**: Partially fixed + Risk Accepted for remainder
+**Status**: Partially fixed + Risk Accepted for remainder (re-confirmed on revalidation scan)
 
 **Original observation**: Response headers revealed the hosting platform (`server: Vercel`, `x-vercel-id`, `x-vercel-cache`, `x-nextjs-*`). An attacker can fingerprint the technology stack and look up known CVEs.
 
@@ -98,9 +98,28 @@ const nextConfig: NextConfig = {
 };
 ```
 
-**Risk accepted for**: `server: Vercel`, `x-vercel-id`, `x-vercel-cache`, `x-nextjs-*`.
+### Verification of fingerprinting methods (TRACE, OPTIONS, TRACK)
 
-**Justification**: These headers are injected by the Vercel edge platform and cannot be modified or suppressed at the application level. The headers do not expose any vulnerability themselves and are common across all Vercel-hosted applications. Since the platform is fully managed, any vulnerability in the underlying infrastructure would be addressed by Vercel as part of their normal patching process.
+The Remedies section of the scanner report suggests disabling TRACE and TRACK methods on the proxy. We verified the current behavior of the production endpoint:
+
+| Method | Response | Notes |
+|---|---|---|
+| `TRACE /` | HTTP/2 405 Method Not Allowed | Not exploitable for XST |
+| `TRACK /` | HTTP/2 405 Method Not Allowed | Not exploitable |
+| `OPTIONS /` | HTTP/2 204 with `Allow: OPTIONS, GET, HEAD` | Required for CORS preflight; minimal allow list |
+
+TRACE and TRACK are already disabled at the Vercel edge and cannot be used for cross-site tracing. OPTIONS is intentionally enabled to support CORS preflight as required by browsers.
+
+### Risk accepted for `server: Vercel`, `x-vercel-id`, `x-vercel-cache`, and `x-nextjs-*`
+
+These headers are injected by the Vercel edge platform and cannot be modified or suppressed at the application level. The fingerprint they expose does not correspond to an exploitable vulnerability:
+
+- TRACE / TRACK methods are disabled (returns 405); no XST attack vector exists.
+- OPTIONS returns only the minimal set of safe methods (`OPTIONS, GET, HEAD`).
+- No application or proxy version numbers are exposed (`server: Vercel` is a brand identifier with no version string).
+- Vercel patches the underlying edge infrastructure continuously as a fully managed PaaS.
+
+Adding an upstream reverse proxy (CloudFront, Cloudflare, custom Nginx) would not eliminate this finding; it would substitute one identifiable proxy for another and add operational complexity without removing the underlying CWE-204 condition. For these reasons the residual finding is accepted as a property of the chosen managed hosting platform.
 
 ---
 

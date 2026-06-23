@@ -180,7 +180,7 @@ Draft answers for the 54-question CASA Tier 2 Self-Assessment Questionnaire (TAC
 
 **Applicable**: Yes
 **Comment**:
-> No shared or default accounts are present in any environment. Database users are created per-service with unique credentials. Kubernetes service accounts are scoped per-deployment. Cloud provider root accounts are MFA-protected and not used for routine operations.
+> No shared or default accounts are present. Application access is per-user with server-side enforcement and no built-in admin/superuser login. The database is accessed via a named application account, not a default vendor account (`sa`/`root`/default `postgres`). Kubernetes service accounts are scoped per-deployment; the AWS root account is MFA-protected and not used for routine operations. Details: https://github.com/zagnu-labs/zagnu-casa-tier2/blob/main/access-control.md
 
 ---
 
